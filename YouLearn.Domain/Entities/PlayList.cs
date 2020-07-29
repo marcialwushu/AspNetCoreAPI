@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using YouLearn.Domain.Enums;
 
 namespace YouLearn.Domain.Entities
 {
@@ -10,7 +9,6 @@ namespace YouLearn.Domain.Entities
 
         public Usuario Usuario { get; set; }
 
-        //EmAnalise, Aprovado ou Recusado
-        public string Status { get; set; }
+        public EnumStatus Status { get; set; }
     }
 }

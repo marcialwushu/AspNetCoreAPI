@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YouLearn.Domain.ValueObjects;
 
 namespace YouLearn.Domain.Entities
 {
@@ -8,9 +9,9 @@ namespace YouLearn.Domain.Entities
     {
         public Guid Id { get; set; }
 
-        public string NomeCompleto { get; set; }
+        public Nome Nome { get; set; }
 
-        public string Email { get; set; }
+        public Email Email { get; set; }
 
         public string Senha { get; set; }
     }
