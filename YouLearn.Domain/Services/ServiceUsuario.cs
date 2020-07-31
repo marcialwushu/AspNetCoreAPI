@@ -13,7 +13,7 @@ namespace YouLearn.Domain.Services
     {
         public AdicionarUsuarioResponse AdicionarUsuario(AdicionarUsuarioRequest request)
         {
-            if (request==null)
+            if (request == null)
             {
                 AddNotification("AdicionarUsuarioRequest", "Objeto AdicionarUsuarioRequest é obrigatório.");
                 return null;
@@ -25,8 +25,7 @@ namespace YouLearn.Domain.Services
             nome.PrimeiroNome = "joao";
             //nome.UltimoNome = ;
 
-            AddNotifications(nome);
-
+            
             Email email = new Email(request.Email);
             email.Endereco = "1234";
 
@@ -35,7 +34,8 @@ namespace YouLearn.Domain.Services
             usuario.Email = email;
             usuario.Senha = request.Senha;
 
-            
+            AddNotifications(nome, email, usuario);
+
 
             if (usuario.Senha.Length >= 3)
             {
@@ -46,6 +46,11 @@ namespace YouLearn.Domain.Services
             //AdicionarUsuarioResponse response =  new RepositoryUsuario().Salvar(usuario);
 
             //return response;
+
+            if (this.IsInvalid() == true)
+            {
+                return null;
+            }
 
             return new AdicionarUsuarioResponse(Guid.NewGuid());
         }

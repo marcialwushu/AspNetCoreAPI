@@ -1,10 +1,11 @@
-﻿using System;
+﻿using prmToolkit.NotificationPattern;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace YouLearn.Domain.Entities.Base
 {
-    public abstract class EntityBase
+    public abstract class EntityBase : Notifiable
     {
         public EntityBase()
         {

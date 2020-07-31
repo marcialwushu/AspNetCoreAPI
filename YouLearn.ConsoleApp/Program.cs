@@ -11,8 +11,8 @@ namespace YouLearn.ConsoleApp
             AdicionarUsuarioRequest request = new AdicionarUsuarioRequest()
             {
                 Email = "paulo.analista@outlook.com",
-                PrimeiroNome = "Paulo Rogério",
-                UltimoNome = "Martins Marques",
+                PrimeiroNome = "",
+                UltimoNome = "",
                 Senha = "12"
             };
 

@@ -13,12 +13,7 @@ namespace YouLearn.Domain.ValueObjects
 
             new AddNotifications<Email>(this)
                 .IfNotEmail(x => x.Endereco, "Email invalido");
-
-
-            if (Endereco.IndexOf('@') < 1)
-            {
-                throw new Exception("Email invalido");
-            }
+            
         }
 
         public string Endereco { get; set; }
