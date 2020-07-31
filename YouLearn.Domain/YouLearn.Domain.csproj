@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Diagrams\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="prmToolkit.NotificationPattern" Version="1.1.3" />
   </ItemGroup>
 
 </Project>

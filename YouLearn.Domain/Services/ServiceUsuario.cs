@@ -1,43 +1,41 @@
-﻿using System;
+﻿using prmToolkit.NotificationPattern;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using YouLearn.Domain.Arguments.Usuario;
 using YouLearn.Domain.Entities;
 using YouLearn.Domain.Interfaces.Services;
+using YouLearn.Domain.ValueObjects;
 
 namespace YouLearn.Domain.Services
 {
-    public class ServiceUsuario : IServiceUsuario
+    public class ServiceUsuario : Notifiable, IServiceUsuario
     {
         public AdicionarUsuarioResponse AdicionarUsuario(AdicionarUsuarioRequest request)
         {
             if (request==null)
             {
-                throw new Exception("Objeto AdicionarUsuarioRequest é obrigatório.");
+                AddNotification("AdicionarUsuarioRequest", "Objeto AdicionarUsuarioRequest é obrigatório.");
+                return null;
             }
 
             //Cria entidade
+            Nome nome = new Nome(request.PrimeiroNome, request.UltimoNome);
+
+            nome.PrimeiroNome = "joao";
+            //nome.UltimoNome = ;
+
+            AddNotifications(nome);
+
+            Email email = new Email(request.Email);
+            email.Endereco = "1234";
+
             Usuario usuario = new Usuario();
-            usuario.Nome.PrimeiroNome = "Paulo Rogério";
-            usuario.Nome.UltimoNome = "Martins Marques";
-            usuario.Email.Endereco = "paulo.analista@outlook.com";
-            usuario.Senha = "123456";
+            usuario.Nome = nome;
+            usuario.Email = email;
+            usuario.Senha = request.Senha;
 
-            //Validações
-            if (usuario.Nome.PrimeiroNome.Length < 3 || usuario.Nome.PrimeiroNome.Length > 50)
-            {
-                throw new Exception("Primeiro nome é obrigatório e deve conter entre 3 a 50 caracteres");
-            }
-
-            if (usuario.Nome.UltimoNome.Length < 3 || usuario.Nome.UltimoNome.Length > 50)
-            {
-                throw new Exception("Ultimo nome é obrigatório e deve conter entre 3 a 50 caracteres");
-            }
-
-            if (usuario.Email.Endereco.IndexOf('@') < 1)
-            {
-                throw new Exception("Email invalido");
-            }
+            
 
             if (usuario.Senha.Length >= 3)
             {
@@ -45,9 +43,11 @@ namespace YouLearn.Domain.Services
             }
 
             //Persiste no banco de dados 
-            AdicionarUsuarioResponse response =  new RepositoryUsuario().Salvar(usuario);
+            //AdicionarUsuarioResponse response =  new RepositoryUsuario().Salvar(usuario);
 
-            return response;
+            //return response;
+
+            return new AdicionarUsuarioResponse(Guid.NewGuid());
         }
 
         public AutenticarUsuarioResponse AutenticarUsuario(AutenticarUsuarioRequest request)
