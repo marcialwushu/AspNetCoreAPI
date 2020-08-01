@@ -16,6 +16,6 @@ namespace YouLearn.Domain.ValueObjects
             
         }
 
-        public string Endereco { get; set; }
+        public string Endereco { get; private set; }
     }
 }
