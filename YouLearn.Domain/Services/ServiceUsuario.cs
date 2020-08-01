@@ -73,11 +73,9 @@ namespace YouLearn.Domain.Services
                 return null;
             }
 
-            var response = new AutenticarUsuarioResponse()
-            {
-                Id = usuario.Id,
-                PrimeiroNome = usuario.Nome.PrimeiroNome
-            };
+            
+
+            var response = (AutenticarUsuarioResponse)usuario;
 
             return response;
         }
