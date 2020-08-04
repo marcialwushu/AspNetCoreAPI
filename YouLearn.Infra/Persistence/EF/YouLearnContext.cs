@@ -22,6 +22,11 @@ namespace YouLearn.Infra.Persistence.EF
 
         //public DbSet<Favorito> Favoritos { get; set; }
 
+        public YouLearnContext()
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(Settings.ConnectionString);
