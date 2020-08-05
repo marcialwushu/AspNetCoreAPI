@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using YouLearn.Domain.Interfaces.Services.Base;
 using YouLearn.Infra.Transactions;
 
 namespace YouLearn.Api.Controllers.Base
@@ -17,7 +18,7 @@ namespace YouLearn.Api.Controllers.Base
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ResponseAsync(object result, IServiceBase serviceBase)
+        public new IActionResult Response(object result, IServiceBase serviceBase)
         {
             _serviceBase = serviceBase;
 
@@ -37,15 +38,23 @@ namespace YouLearn.Api.Controllers.Base
             else
             {
                 return BadRequest(new { errors = serviceBase.Notifications });
-            }           
+            }
 
 
         }
-        public async Task<IActionResult> ResponseExceptionAsync(Exception ex)
+        public IActionResult ResponseException(Exception ex)
         {
             return BadRequest(new { errors = ex.Message, exception = ex.ToString() });
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (_serviceBase != null)
+            {
+                _serviceBase.Dispose();
+            }
 
+            base.Dispose(disposing);
+        }
     }
 }

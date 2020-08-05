@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YouLearn.Domain.Arguments.Usuario;
 using YouLearn.Domain.Interfaces.Services;
+using YouLearn.Infra.Transactions;
 
 namespace YouLearn.Api.Controllers
 {
@@ -12,26 +13,26 @@ namespace YouLearn.Api.Controllers
     {
         private readonly IServiceUsuario _serviceUsuario;
 
-        public UsuarioController(IServiceUsuario serviceUsuario)
+        public UsuarioController(IUnitOfWork unitOfWork, IServiceUsuario serviceUsuario) : base(unitOfWork)
         {
             _serviceUsuario = serviceUsuario;
         }
 
         [HttpPost]
         [Route("api/v1/Usuario/Adicionar")]
-        public async Task<IActionResult> Adicionar([FromBody]AdicionarUsuarioRequest request)
+        public IActionResult Adicionar([FromBody]AdicionarUsuarioRequest request)
         {
             try
             {
                 var response = _serviceUsuario.AdicionarUsuario(request);
-                return await ResponseAsync(response, _serviceUsuario);
+                return Response(response, _serviceUsuario);
             }
             catch (Exception ex)
             {
-                return await ResponseExceptionAsync(ex);
+                return ResponseException(ex);
             }
-                       
-            
+
+
         }
     }
 }
