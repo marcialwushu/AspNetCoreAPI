@@ -6,6 +6,6 @@ namespace YouLearn.Shared
 {
     public static class Settings
     {
-        public static string ConnectionString = @"Server=.\sqlexpress;Database=YouLearnCurso;Trusted_Connection=True;";
+        public static string ConnectionString = "Data Source=.;Initial Catalog=YouLearnCurso; persist security info=True;Integrated Security=SSPI;";
     }
 }
