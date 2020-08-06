@@ -18,7 +18,7 @@ namespace YouLearn.Api.Controllers.Base
             _unitOfWork = unitOfWork;
         }
 
-        public new IActionResult Response(object result, IServiceBase serviceBase)
+        public new IActionResult ResponseAsync(object result, IServiceBase serviceBase)
         {
             _serviceBase = serviceBase;
 
@@ -42,7 +42,7 @@ namespace YouLearn.Api.Controllers.Base
 
 
         }
-        public IActionResult ResponseException(Exception ex)
+        public IActionResult ResponseExceptionAsync(Exception ex)
         {
             return BadRequest(new { errors = ex.Message, exception = ex.ToString() });
         }

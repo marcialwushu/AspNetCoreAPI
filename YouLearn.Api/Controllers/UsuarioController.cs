@@ -25,11 +25,11 @@ namespace YouLearn.Api.Controllers
             try
             {
                 var response = _serviceUsuario.AdicionarUsuario(request);
-                return Response(response, _serviceUsuario);
+                return  ResponseAsync(response, _serviceUsuario);
             }
             catch (Exception ex)
             {
-                return ResponseException(ex);
+                return  ResponseExceptionAsync(ex);
             }
 
 
