@@ -1,4 +1,5 @@
 ﻿using System;
+using YouLearn.Domain.Entities;
 
 namespace YouLearn.Domain.Arguments.Canal
 {
@@ -9,5 +10,15 @@ namespace YouLearn.Domain.Arguments.Canal
         public string Nome { get; set; }
 
         public string UrlLogo { get; set; }
+
+        public static explicit operator CanalResponse(Entities.Canal entidade)
+        {
+            return new CanalResponse()
+            {
+                Id = entidade.Id,
+                Nome = entidade.Nome,
+                UrlLogo = entidade.UrlLogo
+            };
+        }
     }
 }

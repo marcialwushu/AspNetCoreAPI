@@ -14,12 +14,30 @@ namespace YouLearn.Domain.Services
 {
     public class ServiceCanal : Notifiable, IServiceCanal
     {
-        public CanalResponse AdicionarCanal(AdicionarCanalRequest request, Guid id)
+        private readonly IRepositoryUsuario _repositoryUsuario;
+        private readonly IRepositoryCanal _repositoryCanal;
+
+        public ServiceCanal(IRepositoryUsuario repositoryUsuario, IRepositoryCanal repositoryCanal)
         {
-            Canal canal = new Canal();
-            canal.Nome = request.Nome;
-            canal.UrlLogo = request.UrlLogo;
-            canal.Usuario
+            _repositoryUsuario = repositoryUsuario;
+            _repositoryCanal = repositoryCanal;
+        }
+
+        public CanalResponse AdicionarCanal(AdicionarCanalRequest request, Guid idUsuario)
+        {
+            Usuario usuario = _repositoryUsuario.Obter(idUsuario);
+
+            Canal canal = new Canal(request.Nome, request.UrlLogo, usuario);
+
+            AddNotifications(canal);
+
+            if (this.IsInvalid()) return null;
+
+            canal = _repositoryCanal.Adicionar(canal);
+
+            return (CanalResponse)canal;
+           
+            
         }
 
         public Arguments.Base.Response ExcluirCanal(Guid idCanal)

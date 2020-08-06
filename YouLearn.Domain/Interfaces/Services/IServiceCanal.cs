@@ -12,7 +12,7 @@ namespace YouLearn.Domain.Interfaces.Services
     {
         IEnumerable<CanalResponse> Listar(Guid idUsuario);
 
-        CanalResponse AdicionarCanal(AdicionarCanalRequest request, Guid id);
+        CanalResponse AdicionarCanal(AdicionarCanalRequest request, Guid idUsuario);
 
         Response ExcluirCanal(Guid idCanal);
     }
