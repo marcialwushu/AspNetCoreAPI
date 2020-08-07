@@ -15,6 +15,6 @@ namespace YouLearn.Domain.Interfaces.Services
 
         PlayListResponse AdicionarPlayList(AdicionarPlayListRequest request, Guid idUsuario);
 
-        Response ExcluirPlayList(Guid id);
+        Response ExcluirPlayList(Guid idPlayList);
     }
 }

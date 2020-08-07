@@ -1,6 +1,7 @@
 ﻿using prmToolkit.NotificationPattern;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using YouLearn.Domain.Arguments.Base;
 using YouLearn.Domain.Arguments.Canal;
@@ -9,6 +10,7 @@ using YouLearn.Domain.Entities;
 using YouLearn.Domain.Interfaces.Repositories;
 using YouLearn.Domain.Interfaces.Services;
 using YouLearn.Domain.ValueObjects;
+using Response = YouLearn.Domain.Arguments.Base.Response;
 
 namespace YouLearn.Domain.Services
 {
@@ -42,12 +44,40 @@ namespace YouLearn.Domain.Services
 
         public Arguments.Base.Response ExcluirCanal(Guid idCanal)
         {
-            throw new NotImplementedException();
+            //bool existe = _repositoryVideo.ExisteCanalAssociado(idCanal);
+
+            bool existe = true;
+
+            if (existe)
+            {
+                AddNotification("Canal", "Não foi possivel Excluir um canal associadoa video");
+
+                return null;
+            }
+
+            Canal canal = _repositoryCanal.Obter(idCanal);
+
+            if (canal == null)
+            {
+                AddNotification("Canal", "Dados não encontrado");
+            }
+
+            if (IsInvalid()) return null;
+
+            _repositoryCanal.Excluir(canal);
+
+            return new Response() { Message = "Operação realizada com sucesso" };
+
+
         }
 
         public IEnumerable<CanalResponse> Listar(Guid idUsuario)
         {
-            throw new NotImplementedException();
+            IEnumerable<Canal> canalCollection = _repositoryCanal.Listar(idUsuario);
+
+            var response = canalCollection.ToList().Select(entidade => (CanalResponse)entidade);
+
+            return response;
         }
     }
 }
