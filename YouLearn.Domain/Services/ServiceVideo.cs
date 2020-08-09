@@ -63,7 +63,7 @@ namespace YouLearn.Domain.Services
                 }
             }
 
-            var video = new Video(canal, playList, request.Titulo, request.Descricao, request.Tags, request.OrdemNaPlayList, request.IdVideoYoutube);
+            Video video = new Video(canal, playList, request.Titulo, request.Descricao, request.Tags, request.OrdemNaPlayList, request.IdVideoYoutube);
 
             AddNotifications(video);
 
