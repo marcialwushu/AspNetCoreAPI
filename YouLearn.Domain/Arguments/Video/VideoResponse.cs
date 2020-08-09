@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YouLearn.Domain.Entities;
 
 namespace YouLearn.Domain.Arguments.Video
 {
@@ -23,5 +24,20 @@ namespace YouLearn.Domain.Arguments.Video
         public int OrdemNaPlayList { get; set; }
 
         public string Url { get; set; }
+
+        public static explicit operator VideoResponse(Entities.Video entidade)
+        {
+            return new VideoResponse() {
+                Descricao = entidade.Descricao,
+                Url = string.Concat("https://www.youtube.com/embed/", entidade.IdVideoYoutube),
+                NomeCanal = entidade.Canal.Nome,
+                IdVideoYoutube = entidade.IdVideoYoutube,
+                Thumbnail = string.Concat("https://img.youtube.com/vi/", entidade.IdVideoYoutube, "/mqdefault.jpg"),
+                Titulo = entidade.Titulo,
+                IdPlayList = entidade.PlayList?.Id,
+                NomePlayList = entidade.PlayList?.Nome,
+                OrdemNaPlayList = entidade.OrdemNaPlayList
+            };
+        }
     }
 }

@@ -17,6 +17,19 @@ namespace YouLearn.Domain.Services
 {
     public class ServiceVideo : Notifiable, IServiceVideo
     {
+        private readonly IRepositoryUsuario _repositoryUsuario;
+        private readonly IRepositoryCanal _repositoryCanal;
+        private readonly IRepositoryPlayList _repositoryPlayList;
+        private readonly IRepositoryVideo _repositoryVideo;
+
+        public ServiceVideo(IRepositoryUsuario repositoryUsuario, IRepositoryCanal repositoryCanal, IRepositoryPlayList repositoryPlayList, IRepositoryVideo repositoryVideo)
+        {
+            _repositoryUsuario = repositoryUsuario;
+            _repositoryCanal = repositoryCanal;
+            _repositoryPlayList = repositoryPlayList;
+            _repositoryVideo = repositoryVideo;
+        }
+
         public AdicionarVideoResponse AddicionarVideo(AdicionarVideoRequest request, Guid idUsuario)
         {
             if(request == null)
@@ -26,11 +39,49 @@ namespace YouLearn.Domain.Services
             }
 
             Usuario usuario = _repositoryUsuario.Obter(idUsuario);
+            if(usuario == null)
+            {
+                AddNotification("Usuario", "Usuario não informado");
+                return null;
+            }
+
+            Canal canal = _repositoryCanal.Obter(request.IdCanal);
+            if(canal == null)
+            {
+                AddNotification("Canal", "Canal não informado");
+                return null;
+            }
+
+            PlayList playList = null;
+            if(request.IdPlayList != Guid.Empty)
+            {
+                playList = _repositoryPlayList.Obter(request.IdPlayList);
+                if(playList == null)
+                {
+                    AddNotification("PlayList", "Playlist não informada");
+                    return null;
+                }
+            }
+
+            var video = new Video(canal, playList, request.Titulo, request.Descricao, request.Tags, request.OrdemNaPlayList, request.IdVideoYoutube);
+
+            AddNotifications(video);
+
+            if (this.IsInvalid())
+            {
+                return null;
+            }
+
+            _repositoryVideo.Adicionar(video);
+
+            return new AdicionarVideoResponse(video.Id);
         }
 
         public IEnumerable<VideoResponse> Listar(string tags)
         {
-            throw new NotImplementedException();
+            IEnumerable<Video> videoCollection = _repositoryVideo.Listar(tags);
+
+            var response = videoCollection.ToList().Select(entidade => (VideoResponse)entidade);
         }
 
         public IEnumerable<VideoResponse> Listar(Guid idPlayList)

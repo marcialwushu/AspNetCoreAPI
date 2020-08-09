@@ -6,17 +6,17 @@ namespace YouLearn.Domain.Entities
 {
     public class Video : EntityBase
     {
-        public Video(Canal canal, PlayList playList, string titulo, string descricao, string tags, int ordemNaPlayList, string idVideoYoutube, Usuario usuarioSugeriu)
+        private int? ordemNaPlayList;
+
+        public Video(Canal canal, PlayList playList, string titulo, string descricao, string tags, int? ordemNaPlayList, string idVideoYoutube)
         {
             Canal = canal;
             PlayList = playList;
             Titulo = titulo;
             Descricao = descricao;
             Tags = tags;
-            OrdemNaPlayList = ordemNaPlayList;
+            this.ordemNaPlayList = ordemNaPlayList;
             IdVideoYoutube = idVideoYoutube;
-            UsuarioSugeriu = usuarioSugeriu;
-            Status = EnumStatus.EmAnalise;
 
             new AddNotifications<Video>(this)
                 .IfNullOrInvalidLength(x => x.Titulo, 1, 200, "Titulo obrigatório e deve conter de 1 a 200 caracteres")
@@ -26,11 +26,37 @@ namespace YouLearn.Domain.Entities
 
             AddNotifications(canal);
 
-            if(playList != null)
+            if (playList != null)
             {
                 AddNotifications(playList);
             }
         }
+
+        //public Video(Canal canal, PlayList playList, string titulo, string descricao, string tags, int ordemNaPlayList, string idVideoYoutube, Usuario usuarioSugeriu)
+        //{
+        //    Canal = canal;
+        //    PlayList = playList;
+        //    Titulo = titulo;
+        //    Descricao = descricao;
+        //    Tags = tags;
+        //    OrdemNaPlayList = ordemNaPlayList;
+        //    IdVideoYoutube = idVideoYoutube;
+        //    UsuarioSugeriu = usuarioSugeriu;
+        //    Status = EnumStatus.EmAnalise;
+
+        //    new AddNotifications<Video>(this)
+        //        .IfNullOrInvalidLength(x => x.Titulo, 1, 200, "Titulo obrigatório e deve conter de 1 a 200 caracteres")
+        //        .IfNullOrInvalidLength(x => x.Descricao, 1, 250, "Descricao obrigatória e deve conter entre 1 a 50 caractares")
+        //        .IfNullOrInvalidLength(x => x.Tags, 1, 50, "Tag obrigatória e deve conter enre 1 a 50 caracateres")
+        //        .IfNullOrInvalidLength(x => x.IdVideoYoutube, 1, 50, "IdVideoYoutube é obrigatório e deve conter entre 1 a 50 caracteres");
+
+        //    AddNotifications(canal);
+
+        //    if(playList != null)
+        //    {
+        //        AddNotifications(playList);
+        //    }
+        //}
 
         public Canal Canal { get; private set; }
 
