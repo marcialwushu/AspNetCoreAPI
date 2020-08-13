@@ -44,7 +44,7 @@ namespace YouLearn.Api.Controllers
             }
         }
 
-        
+
         [HttpPost]
         [Route("api/v1/Canal/Adicionar")]
         public IActionResult Adicionar([FromBody]AdicionarCanalRequest request)
