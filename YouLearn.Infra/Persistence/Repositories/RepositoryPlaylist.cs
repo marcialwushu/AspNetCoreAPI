@@ -8,11 +8,11 @@ using YouLearn.Infra.Persistence.EF;
 
 namespace YouLearn.Infra.Persistence.Repositories
 {
-    public class RepositoryPlaylist : IRepositoryPlayList
+    public class RepositoryPlayList : IRepositoryPlayList
     {
         private readonly YouLearnContext _context;
 
-        public RepositoryPlaylist(YouLearnContext context)
+        public RepositoryPlayList(YouLearnContext context)
         {
             _context = context;
         }
