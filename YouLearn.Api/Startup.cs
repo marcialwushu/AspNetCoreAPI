@@ -21,8 +21,8 @@ namespace YouLearn.Api
     public class Startup
     {
 
-        private const string ISSUER = "c1f51f42";
-        private const string AUDIENCE = "c6bbbb645024";
+        private const bool ISSUER =  false;
+        private const bool AUDIENCE = false ;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -45,6 +45,7 @@ namespace YouLearn.Api
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);
 
+           
             var tokenConfigurations = new TokenConfigurations
             {
                 Audience = AUDIENCE,
@@ -52,7 +53,7 @@ namespace YouLearn.Api
                 Seconds = int.Parse(TimeSpan.FromDays(1).TotalSeconds.ToString())
             };
             services.AddSingleton(tokenConfigurations);
-
+            
             services.AddAuthentication(authOptions =>
             {
                 authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
