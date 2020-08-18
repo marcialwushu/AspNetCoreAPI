@@ -7,9 +7,9 @@ namespace YouLearn.Api.Security
 {
     public class TokenConfigurations
     {
-        public bool Audience { get; set; }
+        public string Audience { get; set; }
 
-        public bool Issuer { get; set; }
+        public string Issuer { get; set; }
 
         public int Seconds { get; set; }
     }

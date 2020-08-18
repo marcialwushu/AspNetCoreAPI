@@ -74,8 +74,8 @@ namespace YouLearn.Api.Controllers
                 var handler = new JwtSecurityTokenHandler();
                 var securityToken = handler.CreateToken(new SecurityTokenDescriptor
                 {
-                    //Issuer = tokenConfigurations.Issuer,
-                    //Audience = tokenConfigurations.Audience,
+                    Issuer = tokenConfigurations.Issuer,
+                    Audience = tokenConfigurations.Audience,
                     SigningCredentials = signingConfigurations.SigningCredentials,
                     Subject = identity,
                     NotBefore = dataCriacao,

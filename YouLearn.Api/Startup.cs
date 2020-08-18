@@ -23,8 +23,8 @@ namespace YouLearn.Api
     public class Startup
     {
 
-        private const bool ISSUER =  false;
-        private const bool AUDIENCE = false ;
+        private const string ISSUER = "8CBA0C656CA9CECD80F97";
+        private const string AUDIENCE = "57917BCEB9920CDCCD";
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -64,8 +64,8 @@ namespace YouLearn.Api
             {
                 var paramsValidation = bearerOptions.TokenValidationParameters;
                 paramsValidation.IssuerSigningKey = signingConfigurations.SigningCredentials.Key;
-                paramsValidation.ValidateAudience = tokenConfigurations.Audience;
-                paramsValidation.ValidateIssuer = tokenConfigurations.Issuer;
+                paramsValidation.ValidateAudience = false;
+                paramsValidation.ValidateIssuer = false;
 
 
                 //Valida a assinatura de um token recebido 
